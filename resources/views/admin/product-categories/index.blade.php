@@ -6,7 +6,8 @@ Manajemen Kategori Produk
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet"
+    href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endsection
 
@@ -31,6 +32,11 @@ Manajemen Kategori Produk
                 <div class="card">
                     <div class="card-header">
                         <h4>List Kategori Produk</h4>
+                        <div class="card-header-action">
+                            <a href="{{ route('admin.product-categories.create') }}" class="btn btn-primary">
+                                <i class="fas fa-plus fa-fw"></i> Tambah Data
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -45,13 +51,19 @@ Manajemen Kategori Produk
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($product_categories as $key => $category)
+                                    @foreach($productCategories as $key => $category)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>
-                                            <a href="{{ route('admin.product-categories.edit') }}" class="btn btn-info">Edit</a>
-                                            <a href="{{ route('admin.product-categories.edit') }}" class="btn btn-danger">Hapus</a>
+                                            <a href="{{ route('admin.product-categories.edit', ['product_category' => $category->id]) }}"
+                                                class="btn btn-info">Edit</a>
+                                            <form onsubmit="return confirm('Yakin ingin menghapus data?')" action="{{ route('admin.product-categories.destroy', ['product_category' => $category->id]) }}"
+                                                method="POST" class="d-inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

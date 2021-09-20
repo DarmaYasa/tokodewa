@@ -17,7 +17,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $productCategories = ProductCategory::all();
+        return view('admin.product-categories.index', compact('productCategories'));
     }
 
     /**
@@ -27,7 +28,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product-categories.create');
     }
 
     /**
@@ -55,7 +56,7 @@ class ProductCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -64,9 +65,9 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProductCategory $productCategory)
     {
-        //
+        return view('admin.product-categories.edit', compact('productCategory'));
     }
 
     /**
@@ -79,7 +80,7 @@ class ProductCategoryController extends Controller
     public function update(Request $request, ProductCategory $productCategory)
     {
         $request->validate([
-            'name' => 'required|unique:product_categories,name,except,' . $productCategory->id,
+            'name' => 'required|unique:product_categories,name,' . $productCategory->id,
         ]);
 
         $productCategory->update([

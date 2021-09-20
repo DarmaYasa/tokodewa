@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
 
 @section('title')
-Edit Product
+Update Kategori Produk
 @endsection
 
 @section('css')
@@ -15,9 +15,9 @@ Edit Product
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.product-categories.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>Edit Product</h1>
+        <h1>Update Kategori Produk</h1>
     </div>
     <div class="section-body">
         <h2 class="section-title">Informasi</h2>
@@ -30,78 +30,16 @@ Edit Product
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Input Product</h4>
+                        <h4>Form Update Kategori Produk</h4>
                     </div>
-                    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.product-categories.update', ['product_category' => $productCategory->id]) }}" method="POST">
                         @csrf
                         @method('patch')
                         <div class="card-body">
                             <div class="form-group">
-                                <label class="required">Nama Produk</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $product->name) }}">
+                                <label class="required">Nama</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $productCategory->name) }}">
                                 @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label class="required">Jenis Produk</label>
-                                <select name="type" class="custom-select select2 @error('type') is-invalid @enderror">
-                                    <option disabled @if(old('type', $product->type) == null) selected @endif>-Pilih-</option>
-                                    <option value="Laptop" @if(old('type', $product->type) == 'Laptop') selected @endif>Laptop</option>
-                                    <option value="Accessories" @if(old('type', $product->type) == 'Accessories') selected @endif>Accessories</option>
-                                    <option value="Pheriperal" @if(old('type', $product->type) == 'Pheriperal') selected @endif>Pheriperal</option>
-                                </select>
-                                @error('type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label class="required">Qty</label>
-                                <input type="number" min="1" class="form-control @error('qty') is-invalid @enderror" name="qty" value="{{ old('qty', $product->qty) }}">
-                                @error('qty')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Harga</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                          Rp
-                                        </div>
-                                      </div>
-                                    <input type="number" name="price" class="form-control" value="{{ old('price', $product->price) }}">
-                                </div>
-                                @error('price')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Warranty</label>
-                                <div class="input-group">
-                                    <input type="number" name="warranty" class="form-control" value="{{ old('warranty', $product->warranty) }}">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            bulan
-                                        </div>
-                                        </div>
-                                </div>
-                                @error('warranty')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label class="required">Description</label>
-                                <textarea class="summernote @error('description') is-invalid @enderror" name="description" >{!! old('description', $product->description) !!}</textarea>
-                                @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Product Image</label><br>
-                                <img src="{{ asset('upload/products/' . $product->image) }}" style="width: 250px">
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                                @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

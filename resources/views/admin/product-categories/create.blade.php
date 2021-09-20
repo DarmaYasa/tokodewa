@@ -15,7 +15,7 @@ Tambah Kategori Produk
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.product-categories.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>Tambah Kategori Produk</h1>
     </div>
