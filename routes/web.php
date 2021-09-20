@@ -30,5 +30,8 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::middleware('auth:admin')->group(function() {
         Route::post('logout', [App\Http\Controllers\Auth\AdminLoginController::class, 'logout'])->name('logout');
         Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+        Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
+        Route::resource('product-categories', App\Http\Controllers\Admin\ProductCategoryController::class);
     });
 });
