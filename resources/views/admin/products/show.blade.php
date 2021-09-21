@@ -12,9 +12,9 @@ Detail {{ $product->name }}
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>Product Management</h1>
+        <h1>Manajemen Produk</h1>
     </div>
     @if (session('status'))
     <div class="alert alert-success">
@@ -26,12 +26,12 @@ Detail {{ $product->name }}
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detail Product</h4>
+                        <h4>Detail Produk</h4>
                         <div class="card-header-action">
-                            <a href="{{ action('ProductController@edit', $product->id) }}" class="btn btn-warning">
+                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">
                                 Edit
                             </a>
-                            <form action="{{ action('ProductController@destroy', $product->id) }}" method="POST" class="d-inline">
+                            <form onsubmit="return confirm('Yakin ingin menghapus data?')" action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -41,15 +41,14 @@ Detail {{ $product->name }}
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-4">
-                            <img class="w-100" src="{{ asset('upload/products/' . $product->image)}}" alt="Profile {{ $product->name }}">
-                            </div> 
+                            <img class="w-100" src="{{ $product->thumbnail_url}}" alt="Profile {{ $product->name }}">
+                            </div>
                             <div class="col-12 col-md-8">
                                 <h4 class="text-dark">
-                                    {{ $product->name }}
-                                    {{-- Nama Product --}}
+                                    {{ "$product->name" }}
                                 </h4>
                                 <p>
-                                    {{ 'Rp.'.number_format($product->price, 0, ',', '.') }} / Warranty {{ $product->warranty . ' bulan' }}
+                                    {{ $product->category->name . ' / Rp.'.number_format($product->price, 0, ',', '.') }}
                                 </p>
                                 <h6 class="text-dark">
                                     Description

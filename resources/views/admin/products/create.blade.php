@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
 
 @section('title')
-Add Product
+Tambah Produk
 @endsection
 
 @section('css')
@@ -15,9 +15,9 @@ Add Product
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>Add Product</h1>
+        <h1>Tambah Produk</h1>
     </div>
     <div class="section-body">
         <h2 class="section-title">Informasi</h2>
@@ -30,11 +30,11 @@ Add Product
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Input Product</h4>
+                        <h4>Form Input Produk</h4>
                     </div>
-                    <form action="{{ url('dashboard/products') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                       
+
                         <div class="card-body">
                             <div class="form-group">
                                 <label class="required">Nama Produk</label>
@@ -45,20 +45,20 @@ Add Product
                             </div>
                             <div class="form-group">
                                 <label class="required">Jenis Produk</label>
-                                <select name="type" class="custom-select select2 @error('type') is-invalid @enderror">
-                                    <option disabled @if(old('type') == null) selected @endif>-Pilih-</option>
-                                    <option value="Laptop" @if(old('type') == 'Laptop') selected @endif>Laptop</option>
-                                    <option value="Accessories" @if(old('type') == 'Accessories') selected @endif>Accessories</option>
-                                    <option value="Pheriperal" @if(old('type') == 'Pheriperal') selected @endif>Pheriperal</option>
+                                <select name="product_category_id" class="custom-select select2 @error('product_category_id') is-invalid @enderror">
+                                    <option disabled @if(old('product_category_id') == null) selected @endif>-Pilih-</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @if(old('product_category_id') == $category->id) selected @endif>{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
-                                @error('type')
+                                @error('product_category_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="required">Qty</label>
-                                <input type="number" min="1" class="form-control @error('qty') is-invalid @enderror" name="qty" value="{{ old('qty') }}">
-                                @error('qty')
+                                <label class="required">Kuantiti</label>
+                                <input type="number" min="1" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}">
+                                @error('quantity')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -76,7 +76,7 @@ Add Product
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Warranty</label>
                                 <div class="input-group">
                                     <input type="number" name="warranty" class="form-control" value="{{ old('warranty') }}">
@@ -89,7 +89,7 @@ Add Product
                                 @error('warranty')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="required">Description</label>
                                 <textarea class="summernote @error('description') is-invalid @enderror" name="description" >{!! old('description') !!}</textarea>
@@ -99,8 +99,8 @@ Add Product
                             </div>
                             <div class="form-group">
                                 <label>Product Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                                @error('image')
+                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
+                                @error('thumbnail')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

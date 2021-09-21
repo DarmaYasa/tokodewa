@@ -21,13 +21,13 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
 
-    public function getThumbnnailUrl()
+    public function getThumbnailUrlAttribute()
     {
         if($this->thumbnail != null) {
-            return Storage::url($this->thumbnail);
+            return asset(Storage::url($this->thumbnail));
         } else {
             return null;
         }
