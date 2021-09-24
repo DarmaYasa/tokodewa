@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TranscationController extends Controller
@@ -14,7 +15,9 @@ class TranscationController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::all();
+
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     /**
@@ -24,7 +27,7 @@ class TranscationController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -35,7 +38,7 @@ class TranscationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -44,9 +47,9 @@ class TranscationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaction $transaction)
     {
-        //
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     /**
@@ -57,7 +60,7 @@ class TranscationController extends Controller
      */
     public function edit($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -69,7 +72,7 @@ class TranscationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -80,6 +83,6 @@ class TranscationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort(404);
     }
 }

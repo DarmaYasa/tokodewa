@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
 
 @section('title')
-Transactions Management
+Manajemen Transaksi
 @endsection
 
 @section('css')
@@ -13,7 +13,7 @@ Transactions Management
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Transactions Management</h1>
+        <h1>Manajemen Transaksi</h1>
     </div>
     @if (session('success'))
     <div class="alert alert-success">
@@ -30,11 +30,11 @@ Transactions Management
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Transactions</h4>
+                        <h4>List Transaksi</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('transactions.create') }}" class="btn btn-primary">
+                            {{-- <a href="{{ route('admin.transactions.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus fa-fw"></i> Tambah Data
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -46,25 +46,29 @@ Transactions Management
                                             #
                                         </th>
                                         <th>Tanggal</th>
-                                        <th>Nama</th>
-                                        <th>Barang</th>
+                                        <th>Kode</th>
+                                        <th>User</th>
                                         <th>Total</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($transactions as $key => $transaction)
                                     <tr>
-                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ date('l, d F Y', strtotime($transaction->date)) }}</td>
-                                        <td>{{ $transaction->name }}</td>
+                                        <td>{{ $transaction->code }}</td>
                                         <td>
                                             <ul>
-                                                @foreach (explode(',', $transaction->products) as $product)
-                                                    <li>{{ $product }}</li>
+                                                @foreach ($transaction->details as $detail)
+                                                    <li>{{ $detail->product->name . ' x' . $detail->quantity }}</li>
                                                 @endforeach
                                             </ul>
                                         </td>
-                                        <td>{{ 'Rp.'.number_format($transaction->total, 0, '.', ',') }}</td>
+                                        <td>{{ 'Rp.'.number_format($transaction->grand_total, 0, '.', ',') }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.transactions.show', $transaction->id) }}" class="btn btn-primary">Detail</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
