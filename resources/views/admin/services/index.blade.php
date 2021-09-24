@@ -1,7 +1,7 @@
 @extends('layouts.admin-master')
 
 @section('title')
-Services Management
+Manajemen Service
 @endsection
 
 @section('css')
@@ -13,7 +13,7 @@ Services Management
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Services Management</h1>
+        <h1>Manajemen Service</h1>
     </div>
     @if (session('success'))
     <div class="alert alert-success">
@@ -32,7 +32,7 @@ Services Management
                     <div class="card-header">
                         <h4>List Services</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('services.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.services.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus fa-fw"></i> Tambah Data
                             </a>
                         </div>
@@ -51,7 +51,6 @@ Services Management
                                         <th>Jenis Kerusakan</th>
                                         <th>Alamat</th>
                                         <th>Telp</th>
-                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -65,9 +64,8 @@ Services Management
                                         <td>{{ $service->type }}</td>
                                         <td>{{ $service->address }}</td>
                                         <td>{{ $service->telp }}</td>
-                                        <td>{!! $service->description !!}</td>
                                         <td>
-                                            <a href="{{ action('ServiceController@show', $service->id) }}" class="btn btn-info">Detail</a>
+                                            <a href="{{ route('admin.services.show', $service->id) }}" class="btn btn-info">Detail</a>
                                         </td>
                                     </tr>
                                     @endforeach

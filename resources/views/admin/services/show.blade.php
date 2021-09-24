@@ -12,9 +12,9 @@ Detail Service
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('services.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.services.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>Services Management</h1>
+        <h1>Manajemen Service</h1>
     </div>
     @if (session('status'))
     <div class="alert alert-success">
@@ -28,10 +28,10 @@ Detail Service
                     <div class="card-header">
                         <h4>Detail Service</h4>
                         <div class="card-header-action">
-                            <a href="{{ action('ServiceController@edit', $service->id) }}" class="btn btn-warning">
+                            <a href="{{ route('admin.services.edit', $service->id) }}" class="btn btn-warning">
                                 Edit
                             </a>
-                            <form action="{{ action('ServiceController@destroy', $service->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -39,48 +39,48 @@ Detail Service
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-12">
-                                <table class="table table-striped" v-align="top">
+                                <table class="" v-align="top">
                                     <tr>
-                                        <th>Tanggal</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ date('l, d F Y', strtotime($service->date)) }}</td>
+                                        <th class="align-top">Tanggal</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ date('l, d F Y', strtotime($service->date)) }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nama Pelanngan</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->name}}</td>
+                                        <th class="align-top">Nama Pelanngan</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->user_name}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nama Barang</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->stuff}}</td>
+                                        <th class="align-top">Nama Barang</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->name}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Alamat</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->address}}</td>
+                                        <th class="align-top">Alamat</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->user_address}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Telpon</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->telp}}</td>
+                                        <th class="align-top">Telpon</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->user_telp}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Jenis Kerusakan</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->type}}</td>
+                                        <th class="align-top">Jenis Kerusakan</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->type}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Biaya</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{{ $service->cost != null ? 'Rp.' . number_format($service->cost, 0, ',', '.') : '-' }}</td>
+                                        <th class="align-top">Biaya</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{{ $service->cost != null ? 'Rp.' . number_format($service->cost, 0, ',', '.') : '-' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Deskripsi</th>
-                                        <td style="width:10px">:</td>
-                                        <td>{!! $service->description !!}</td>
+                                        <th class="align-top">Deskripsi</th>
+                                        <td class="align-top" style="width:10px">:</td>
+                                        <td class="align-top">{!! $service->description !!}</td>
                                     </tr>
                                 </table>
                             </div>

@@ -17,10 +17,36 @@ class Service extends Model
         'product',
         'type',
         'description',
+        'cost',
+        'date'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getUserNameAttribute()
+    {
+        if($this->user_id !== null) {
+            return $this->user->name;
+        }
+        return $this->name;
+    }
+
+    public function getUserAddressAttribute()
+    {
+        if($this->user_id !== null) {
+            return $this->user->address;
+        }
+        return $this->address;
+    }
+
+    public function getUserTelpAttribute()
+    {
+        if($this->user_id !== null) {
+            return $this->user->telp;
+        }
+        return $this->telp;
     }
 }
