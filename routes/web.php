@@ -1,5 +1,7 @@
 
 <?php
+
+use App\Http\Controllers\User\CartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-// Auth::routes();
+Auth::routes();
 
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -40,4 +42,10 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
 Route::prefix('/products')->name('products.')->group(function() {
     Route::get('/', [App\Http\Controllers\User\ProductController::class, 'index'])->name('index');
+    Route::get('/{product}', [App\Http\Controllers\User\ProductController::class, 'show'])->name('show');
+});
+
+Route::prefix('/carts')->name('carts.')->group(function() {
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/', [CartController::class, 'store'])->name('store');
 });
