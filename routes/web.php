@@ -38,6 +38,6 @@ Route::prefix('admin')->name('admin.')->group(function() {
     });
 });
 
-Route::prefix('/products')->name('products')->group(function() {
+Route::prefix('/products')->name('products.')->group(function() {
     Route::get('/', [App\Http\Controllers\User\ProductController::class, 'index'])->name('index');
 });

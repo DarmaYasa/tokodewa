@@ -43,20 +43,16 @@
                 </button>
             </div>
             <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                <a href="#"
-                    class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ Request::route()->getName() == 'home' ? ' border-blue-500 text-gray-900' :
                     'border-transparent' }} ">Beranda</a>
-                <a href="#"
-                    class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
-                    {{ (Request::route()->getName() == 'product' ? ' border-blue-500 text-gray-900' :
+                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                    {{ (Request::route()->getName() == 'products.index' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Produk</a>
-                <a href="#"
-                    class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ (Request::route()->getName() == 'service' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Servis</a>
-                <a href="#"
-                    class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ (Request::route()->getName() == 'contact' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Kontak</a>
             </nav>
@@ -66,6 +62,46 @@
         </div>
     </header>
     @yield('content')
+    <section class="text-gray-600 body-font bg-white">
+        <div class="container px-5 py-24 mx-auto">
+            <h1 class="text-3xl font-medium title-font text-gray-900 mb-12 text-center">Testimonials</h1>
+            <div class="flex flex-wrap -m-4">
+                <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                    <div class="h-full text-center">
+                        <img alt="testimonial"
+                            class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                            src="https://dummyimage.com/302x302">
+                        <p class="leading-relaxed">Produknya ori... mantabb. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum praesentium error suscipit ipsa dolorem sapiente modi pariatur illo, quisquam eligendi necessitatibus magni quae in placeat vel harum nisi corrupti ad?</p>
+                        <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                        <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">JOKO</h2>
+                        <p class="text-gray-500">Mahasiswa</p>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 lg:mb-0 mb-6 p-4">
+                    <div class="h-full text-center">
+                        <img alt="testimonial"
+                            class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                            src="https://dummyimage.com/300x300">
+                        <p class="leading-relaxed">Barangnya awet, rekomended banget beli disini. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nostrum sequi optio harum nesciunt quos tempore, illum porro, esse a molestias magnam aspernatur quam facere laudantium officia quo dicta eveniet?</p>
+                        <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                        <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">Ibu Susi</h2>
+                        <p class="text-gray-500">Pegawai Swasta</p>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 lg:mb-0 p-4">
+                    <div class="h-full text-center">
+                        <img alt="testimonial"
+                            class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
+                            src="https://dummyimage.com/305x305">
+                        <p class="leading-relaxed">Servisnya bagus banget. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima dolor doloremque ex eum. Laudantium possimus culpa impedit nobis quos dolore suscipit quas, modi ex aspernatur aut, in quo veniam alias.</p>
+                        <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+                        <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">Puan</h2>
+                        <p class="text-gray-500">PNS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer class="text-gray-600 body-font">
         <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
             <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
