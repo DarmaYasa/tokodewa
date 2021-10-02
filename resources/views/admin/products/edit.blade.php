@@ -86,7 +86,7 @@ Edit Produk
                             <div class="form-group">
                                 <label>Product Image</label><br>
                                 <img src="{{ $product->thumbnail_url }}" style="width: 250px">
-                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <input type="file" name="thumbnail" class="form-control" accept="image/*">
                                 @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

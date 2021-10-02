@@ -4,9 +4,15 @@ module.exports = {
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
-    darkMode: true, // or 'media' or 'class'
+    darkMode: 'class', // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            spacing: {
+                '128': '32rem',
+                '144': '36rem',
+                '156': '48rem',
+            },
+        },
     },
     variants: {
         extend: {},
