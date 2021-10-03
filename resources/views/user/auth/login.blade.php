@@ -22,6 +22,7 @@
             </h2>
         </div>
         <form class="mt-8 p-5 bg-white" action="#" method="POST">
+            @csrf
             <input type="hidden" name="remember" value="true">
             <div class="rounded-md shadow-sm">
                 <div class="mb-4">

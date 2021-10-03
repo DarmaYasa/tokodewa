@@ -10,8 +10,9 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        ddd($request->user()->carts);
+        dd($request->user());
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -19,7 +20,7 @@ class CartController extends Controller
             'quantity' => 'nullable|numeric|min:1'
         ]);
 
-        $cart = Cart::where('user_id', $request->user()->id)->where('product_id')->first();
+        $cart = Cart::where('user_id', $request->user()->id)->where('product_id', $request->product_id)->first();
 
         if($cart != null){
             $cart->update(['quantity' => $cart->quantity + $request->quantity]);
@@ -30,6 +31,6 @@ class CartController extends Controller
             ]);
         }
 
-        return response(null, 204);
+        return response($request->user()->carts->count(), 201);
     }
 }

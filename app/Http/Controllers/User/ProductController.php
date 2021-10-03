@@ -12,6 +12,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = new Product();
+        if($request->filled('search')) {
+            $products = $products->where('name', 'like', '%' . $request->search . '%');
+        }
+
         if($request->filled('category')) {
             $products = $products->where('product_category_id', $request->category);
         }

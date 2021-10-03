@@ -38,15 +38,38 @@
                     <span class="ml-3 text-xl">Dijaya Computer</span>
                 </a>
                 <div class="md:hidden flex items-center">
+                    <button type="button" class="mr-2 pr-3" onclick="toogleSearch(true)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
                     @if (auth()->check())
-                        <a href="#" class="bg-blue-100 text-blue-600 rounded-full h-8 w-8 flex items-center justify-center mr-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                              </svg>
-                        </a>
-                        <a href="#" class="flex items-center">
-                            <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y" class="rounded-full h-10 w-10">
-                        </a>
+                    <a href="#" class="flex items-center justify-center mr-2 border-r pr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span id="cartCount">{{ Auth::user()->carts->count() }}</span>
+                    </a>
+                    <a href="#" class="flex items-center" onclick="toogleUserDropdown(userDropDown)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="absolute right-0 px-2 py-2 w-48 bg-white top-0 mt-12 rounded hidden border shadow"
+                            id="userDropDown">
+                            <a href="" class="p-3 border-b w-full block">Profile</a>
+                            <form action="{{ route('logout') }}" class="w-full" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="text-red-500 text-sm p-3 hover:text-red-600">Logout</button>
+                            </form>
+                        </div>
+                    </a>
                     @else
                     <a href="login"
                         class="hidden md:inline-flex items-center bg-blue-500 text-white border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded text-base mt-4 md:mt-0">Login
@@ -55,10 +78,10 @@
                 </div>
             </div>
             <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="{{ route('home') }}" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ Request::route()->getName() == 'home' ? ' border-blue-500 text-gray-900' :
                     'border-transparent' }} ">Beranda</a>
-                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="{{ route('products.index') }}" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ (Request::route()->getName() == 'products.index' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Produk</a>
                 <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
@@ -69,16 +92,39 @@
                     'border-transparent') }} ">Kontak</a>
             </nav>
             <div class="hidden md:inline-flex items-center">
+                <button type="button" class="mr-2 pr-3" onclick="toogleSearch(true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
                 @if (auth()->check())
-                    <a href="#" class="bg-blue-100 text-blue-600 rounded-full h-8 w-8 flex items-center justify-center mr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                    </a>
-                    <a href="#" class="flex items-center">
-                        <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y" class="rounded-full h-10 w-10">
-                        <span class="ml-2">{{ auth()->user()->name }}</span>
-                    </a>
+                <a href="#" class="flex items-center justify-center mr-2 border-r pr-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span id="cartCountDesktop">{{ Auth::user()->carts->count() }}</span>
+                </a>
+                <a href="#" class="flex items-center relative" onclick="toogleUserDropdown(userDropDownDesktop)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="ml-2">{{ auth()->user()->name }}</span>
+                    <div class="absolute right-0 px-2 py-2 w-48 bg-white top-0 mt-16 rounded hidden mr-20 border shadow"
+                        id="userDropDownDesktop">
+                        <a href="" class="p-3 border-b w-full block">Profile</a>
+                        <form action="{{ route('logout') }}" class="w-full" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button class="text-red-500 text-sm p-3 hover:text-red-600">Logout</button>
+                        </form>
+                    </div>
+                </a>
                 @else
                 <a href="login"
                     class="hidden md:inline-flex items-center bg-blue-500 text-white border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded text-base mt-4 md:mt-0">Login
@@ -87,6 +133,20 @@
             </div>
         </div>
     </header>
+    <div class="h-full w-full absolute top-0 bg-gray-900 bg-opacity-90 flex justify-center items-center z-30 hidden"
+        id="searchSection">
+        <button class="absolute right-0 top-0 mr-10 mt-10 text-white" type="button" onclick="toogleSearch(false)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-10 w-8 md:w-10" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </button>
+        <form action="{{ route('products.index') }}" method="GET" class="w-full px-10 md:px-20">
+            <input type="text" name="search"
+                class="w-full rounded-md border focus:outline-none focus:border-blue-500 px-6 py-3">
+        </form>
+    </div>
     @yield('content')
     <section class="text-gray-600 body-font bg-white">
         <div class="container px-5 py-24 mx-auto">
@@ -97,7 +157,9 @@
                         <img alt="testimonial"
                             class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
                             src="https://dummyimage.com/302x302">
-                        <p class="leading-relaxed">Produknya ori... mantabb. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum praesentium error suscipit ipsa dolorem sapiente modi pariatur illo, quisquam eligendi necessitatibus magni quae in placeat vel harum nisi corrupti ad?</p>
+                        <p class="leading-relaxed">Produknya ori... mantabb. Lorem ipsum dolor, sit amet consectetur
+                            adipisicing elit. Earum praesentium error suscipit ipsa dolorem sapiente modi pariatur illo,
+                            quisquam eligendi necessitatibus magni quae in placeat vel harum nisi corrupti ad?</p>
                         <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
                         <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">JOKO</h2>
                         <p class="text-gray-500">Mahasiswa</p>
@@ -108,7 +170,10 @@
                         <img alt="testimonial"
                             class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
                             src="https://dummyimage.com/300x300">
-                        <p class="leading-relaxed">Barangnya awet, rekomended banget beli disini. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nostrum sequi optio harum nesciunt quos tempore, illum porro, esse a molestias magnam aspernatur quam facere laudantium officia quo dicta eveniet?</p>
+                        <p class="leading-relaxed">Barangnya awet, rekomended banget beli disini. Lorem ipsum dolor sit
+                            amet consectetur, adipisicing elit. Tenetur nostrum sequi optio harum nesciunt quos tempore,
+                            illum porro, esse a molestias magnam aspernatur quam facere laudantium officia quo dicta
+                            eveniet?</p>
                         <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
                         <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">Ibu Susi</h2>
                         <p class="text-gray-500">Pegawai Swasta</p>
@@ -119,7 +184,9 @@
                         <img alt="testimonial"
                             class="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100"
                             src="https://dummyimage.com/305x305">
-                        <p class="leading-relaxed">Servisnya bagus banget. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima dolor doloremque ex eum. Laudantium possimus culpa impedit nobis quos dolore suscipit quas, modi ex aspernatur aut, in quo veniam alias.</p>
+                        <p class="leading-relaxed">Servisnya bagus banget. Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Minima dolor doloremque ex eum. Laudantium possimus culpa impedit nobis
+                            quos dolore suscipit quas, modi ex aspernatur aut, in quo veniam alias.</p>
                         <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
                         <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">Puan</h2>
                         <p class="text-gray-500">PNS</p>
@@ -172,6 +239,61 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function toogleSearch(toogle) {
+                if(toogle) {
+                    $('#searchSection').removeClass('hidden');
+                } else {
+                    $('#searchSection').addClass('hidden');
+                }
+            }
+
+        function toogleUserDropdown(id) {
+            if($(id).hasClass('hidden')){
+                $(id).removeClass('hidden');
+            } else {
+                $(id).addClass('hidden');
+            }
+        }
+        $(document).ready(function() {
+            $('.cartForm').on('submit', function(e) {
+            e.preventDefault();
+            $(this).children('button').addClass('opacity-50 pointer-envents-none');
+            $.ajax({
+                type: "POST",
+                data: $(this).serializeArray(),
+                url: "{{ route('carts.store') }}",
+                // processData: false,
+                // contentType: false,
+                success: function(data) {
+                    $(this).children('button').removeClass('opacity-50 pointer-envents-none');
+                    console.log(data);
+
+                    // window.open(printURL + '/' + data.invoice.invoice_number, '_blank');
+                    $('#cartCount').html(Number(data));
+                    $('#cartCountDesktop').html(Number(data));
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                    })
+
+                },
+                error: function(error) {
+                    console.log(error.responseJSON);
+                    Swal.fire({
+                        backdrop: false,
+                        heightAuto: false,
+                        icon: 'error',
+                        title: 'Gagal',
+                        // text: error.responseJSON.error,
+                    });
+                    $(this).children('button').removeClass('opacity-50 pointer-envents-none');
+                }
+            })
+        });
+        });
+    </script>
     @yield('script')
 </body>
 
