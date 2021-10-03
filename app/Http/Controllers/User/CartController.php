@@ -10,7 +10,9 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        dd($request->user());
+        $carts = $request->user()->carts;
+        // dd($request->user()->carts);
+        return view('user.carts.index', compact('carts'));
     }
 
     public function store(Request $request)
@@ -32,5 +34,30 @@ class CartController extends Controller
         }
 
         return response($request->user()->carts->count(), 201);
+    }
+
+    public function update(Request $request, Cart $cart)
+    {
+        $request->validate([
+            'quantity' => 'required|numeric|min:1'
+        ]);
+
+        $cart->update(['quantity' => $request->quantity]);
+
+        return response([
+            'total' => $cart->total,
+            'grand_total' => $request->user()->total_cart
+        ], 201);
+    }
+
+    public function destroy(Request $request, Cart $cart)
+    {
+        $cart->delete();
+
+        $data = [
+            'count' => $request->user()->carts->count(),
+            'total' => $request->user()->total_cart,
+        ];
+        return response($data, 201);
     }
 }

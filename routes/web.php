@@ -2,6 +2,7 @@
 <?php
 
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\TransactionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,4 +52,8 @@ Route::prefix('/products')->name('products.')->group(function() {
 Route::prefix('/carts')->name('carts.')->group(function() {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/', [CartController::class, 'store'])->name('store');
+    Route::put('/{cart}', [CartController::class, 'update'])->name('update');
+    Route::delete('/{cart}', [CartController::class, 'destroy'])->name('destroy');
 });
+
+Route::post('/transactions', [TransactionController::class, 'store']);
