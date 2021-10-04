@@ -28,7 +28,7 @@ Manajemen Transaksi
                     <div class="col-lg-12">
                         <div class="invoice-title">
                             <h2>Transaksi</h2>
-                            <div class="invoice-number">#{{ $transcation->code }}</div>
+                            <div class="invoice-number">#{{ $transaction->code }}</div>
                         </div>
                         <hr>
                         <div class="row">

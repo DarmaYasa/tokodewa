@@ -9,11 +9,12 @@
       <li class="menu-header">Dashboard</li>
       <li class="{{ Request::route()->getName() == 'admin.dashboard' ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fa fa-columns"></i> <span>Dashboard</span></a></li>
 
-      {{-- <li class="menu-header">Master</li>
-      <li class="{{ Route::is('products.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('products.index') }}"><i class="fas fa-file-alt"></i> <span>Produk</span></a></li>
+      <li class="menu-header">Master</li>
+      <li class="{{ Route::is('admin.products.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.products.index') }}"><i class="fas fa-file-alt"></i> <span>Produk</span></a></li>
+      <li class="{{ Route::is('admin.product-categories.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.product-categories.index') }}"><i class="fas fa-file-alt"></i> <span>Kategori Produk</span></a></li>
 
       <li class="menu-header">Transaksi</li>
-      <li class="{{ Route::is('transactions.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('transactions.index') }}"><i class="far fa-credit-card"></i> <span>Penjualan</span></a></li>
-      <li class="{{ Route::is('services.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('services.index') }}"><i class="fas fa-file-medical"></i> <span>Servis</span></a></li> --}}
+      <li class="{{ Route::is('admin.transactions.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.transactions.index') }}"><i class="far fa-credit-card"></i> <span>Penjualan</span></a></li>
+      <li class="{{ Route::is('admin.services.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.services.index') }}"><i class="fas fa-file-medical"></i> <span>Servis</span></a></li>
     </ul>
 </aside>
