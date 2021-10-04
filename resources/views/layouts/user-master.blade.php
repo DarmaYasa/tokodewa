@@ -30,7 +30,7 @@
 </head>
 
 <body class="bg-gray-50">
-    <div id="loadingScreen" class="bg-white opacity-50 fixed top-0 left-0 w-full h-full flex justify-center items-center hidden">
+    <div id="loadingScreen" class="bg-white opacity-50 fixed top-0 left-0 w-full h-full flex justify-center items-center hidden z-50">
         <svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -55,7 +55,7 @@
                         </svg>
                     </button>
                     @if (auth()->check())
-                    <a href="#" class="flex items-center justify-center mr-2 border-r pr-3">
+                    <a href="{{ route('carts.index') }}" class="flex items-center justify-center mr-2 border-r pr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -93,10 +93,10 @@
                 <a href="{{ route('products.index') }}" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ (Request::route()->getName() == 'products.index' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Produk</a>
-                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
-                    {{ (Request::route()->getName() == 'service' ? ' border-blue-500 text-gray-900' :
+                <a href="{{ route('service') }}" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                    {{ (Request::route()->getName() == 'services' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Servis</a>
-                <a href="#" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
+                <a href="{{ route('contact') }}" class="mx-2 px-2 md:px-3 transition-all duration-500 py-3 md:py-5 text-center font-medium hover:font-bold border-b-4 border-transparent hover:border-blue-500 hover:text-gray-900
                     {{ (Request::route()->getName() == 'contact' ? ' border-blue-500 text-gray-900' :
                     'border-transparent') }} ">Kontak</a>
             </nav>
@@ -109,7 +109,7 @@
                     </svg>
                 </button>
                 @if (auth()->check())
-                <a href="#" class="flex items-center justify-center mr-2 border-r pr-5">
+                <a href="{{ route('carts.index') }}" class="flex items-center justify-center mr-2 border-r pr-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -40,6 +40,16 @@ class HomeController extends Controller
         return view('user.index', compact('products', 'popularProducts', 'sliders'));
     }
 
+    public function service()
+    {
+        return view('user.service');
+    }
+
+    public function contact()
+    {
+        return view('user.contact');
+    }
+
     public function dashboard()
     {
         return view('admin.dashboard.index');

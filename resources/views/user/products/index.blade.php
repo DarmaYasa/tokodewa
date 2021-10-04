@@ -18,7 +18,7 @@ Product
     </div>
 </section>
 <section class="body-font">
-    <div class="container px-3 py-5 mx-auto flex">
+    <div class="container px-3 py-5 mx-auto flex flex-col md:flex-row">
         <div class="w-full md:w-1/4 mb-5 pr-0 md:pr-5">
             <div class="bg-white rounded-md p-3">
                 <h1 class="w-full font-medium title-font text-xl py-3 text-center bg-gray-100 rounded">Kategori</h1>

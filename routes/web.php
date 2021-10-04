@@ -28,6 +28,9 @@ Route::get('/admin', function() {
 });
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/services', [App\Http\Controllers\HomeController::class, 'service'])->name('service');
+Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
+Route::post('/contact', App\Http\Controllers\SendContactEmailController::class)->name('contact.post');
 
 Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('login', [App\Http\Controllers\Auth\AdminLoginController::class, 'showLoginForm'])->name('login');
