@@ -20,6 +20,7 @@
             <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
                 Login
             </h2>
+            <a href="{{ route('register') }}" class="text-blue-600 text-center w-full block mt-2">Daftar</a>
         </div>
         <form class="mt-8 p-5 bg-white" action="#" method="POST">
             @csrf

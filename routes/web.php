@@ -52,11 +52,13 @@ Route::prefix('/products')->name('products.')->group(function() {
     Route::get('/{product}', [App\Http\Controllers\User\ProductController::class, 'show'])->name('show');
 });
 
-Route::prefix('/carts')->name('carts.')->group(function() {
-    Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::post('/', [CartController::class, 'store'])->name('store');
-    Route::put('/{cart}', [CartController::class, 'update'])->name('update');
-    Route::delete('/{cart}', [CartController::class, 'destroy'])->name('destroy');
-});
+Route::middleware('auth')->group(function() {
+    Route::prefix('/carts')->name('carts.')->group(function() {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('/', [CartController::class, 'store'])->name('store');
+        Route::put('/{cart}', [CartController::class, 'update'])->name('update');
+        Route::delete('/{cart}', [CartController::class, 'destroy'])->name('destroy');
+    });
 
-Route::post('/transactions', [TransactionController::class, 'store']);
+    Route::post('/transactions', [TransactionController::class, 'store']);
+});

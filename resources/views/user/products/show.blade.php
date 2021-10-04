@@ -40,9 +40,14 @@ Product
                     <input name="quantity" type="number" min="1"
                         class="pl-3 pr-1 py-2 rounded max-w-16 w-16 mr-2 border-2 border-blue-600" value="1">
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    @if (Auth::check())
                     <button id="buttonSubmit"
                         class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">Tambah
                         Ke Keranjang</button>
+                    @else
+                    <a href="{{ route('login') }}" class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Tambah
+                        Ke Keranjang</a>
+                    @endif
                 </form>
             </div>
         </div>
@@ -78,6 +83,7 @@ Product
             <a href="{{ route('products.show', $product->id) }}"
                 class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
                 Detail</a>
+            @if (Auth::check())
             <form action="" class="cartForm" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -91,6 +97,16 @@ Product
                     </svg>
                 </button>
             </form>
+            @else
+            <a href="{{ route('login') }}"
+                class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </a>
+            @endif
         </div>
     </div>
     @endforeach
