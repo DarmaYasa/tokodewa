@@ -61,6 +61,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        abort(404);
         return view('admin.users.show', compact('user'));
     }
 
@@ -86,7 +87,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email,'. $user->id,
             'password' => 'nullable|min:8',
             'address' => 'required',
             'telp' => 'required',

@@ -60,6 +60,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
+        abort(404);
         return view('admin.admins.show', compact('admin'));
     }
 

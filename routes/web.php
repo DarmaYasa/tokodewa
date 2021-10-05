@@ -45,6 +45,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('transactions', App\Http\Controllers\Admin\TranscationController::class);
         Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
         Route::resource('admins', App\Http\Controllers\Admin\AdminController::class);
+        Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     });
 });
 

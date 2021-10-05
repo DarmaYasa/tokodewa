@@ -1,19 +1,20 @@
 @extends('layouts.admin-master')
 
 @section('title')
-Manajemen Admin
+Manajemen User
 @endsection
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet"
+    href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 @endsection
 
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Manajemen Admin</h1>
+        <h1>Manajemen User</h1>
     </div>
     @if (session('success'))
     <div class="alert alert-success">
@@ -30,9 +31,9 @@ Manajemen Admin
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Admin</h4>
+                        <h4>List User</h4>
                         <div class="card-header-action">
-                            <a href="{{ route('admin.admins.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus fa-fw"></i> Tambah Data
                             </a>
                         </div>
@@ -53,17 +54,18 @@ Manajemen Admin
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($admins as $key => $admin)
+                                    @foreach($users as $key => $user)
                                     <tr>
                                         <td>{{ ++$key }}</td>
-                                        <td>{{ $admin->name }}</td>
-                                        <td>{{ $admin->email }}</td>
-                                        <td>{{ $admin->address }}</td>
-                                        <td>{{ $admin->telp }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->address }}</td>
+                                        <td>{{ $user->telp }}</td>
                                         <td>
-                                            <a href="{{ route('admin.admins.edit', $admin->id) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                class="btn btn-warning">Edit</a>
                                             <form onsubmit="return confirm('Yakin ingin menghapus data?')"
-                                                action="{{ route('admin.admins.destroy', $admins->id) }}" method="POST"
+                                                action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('delete')

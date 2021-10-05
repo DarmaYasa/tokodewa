@@ -11,6 +11,7 @@
 
       <li class="menu-header">Master</li>
       <li class="{{ Route::is('admin.admins.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.admins.index') }}"><i class="fas fa-user"></i> <span>Admin</span></a></li>
+      <li class="{{ Route::is('admin.users.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-user-circle"></i> <span>User</span></a></li>
 
       <li class="menu-header">Master</li>
       <li class="{{ Route::is('admin.products.*') ? ' active' : '' }}"><a class="nav-link" href="{{ route('admin.products.index') }}"><i class="fas fa-file-alt"></i> <span>Produk</span></a></li>
