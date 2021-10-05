@@ -44,6 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('product-categories', App\Http\Controllers\Admin\ProductCategoryController::class);
         Route::resource('transactions', App\Http\Controllers\Admin\TranscationController::class);
         Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
+        Route::resource('admins', App\Http\Controllers\Admin\AdminController::class);
     });
 });
 
