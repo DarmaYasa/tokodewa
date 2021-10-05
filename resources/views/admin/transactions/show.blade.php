@@ -42,7 +42,7 @@ Manajemen Transaksi
                             <div class="col-md-6 text-md-right">
                                 <address>
                                     <strong>Pembayaran:</strong><br>
-                                    -
+                                    {{ $transaction->paid ? 'Sudah Dibayar' : 'Belum Dibayar' }}
                                 </address>
                             </div>
                         </div>
@@ -99,7 +99,9 @@ Manajemen Transaksi
             <hr>
             <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
-                    <button class="btn btn-success btn-icon icon-left"><i class="fas fa-credit-card"></i> Proses Transaksi</button>
+                    <form action="{{ route('admin.transactions.update', $transaction->id) }}" class="inline">
+                        <button class="btn btn-success btn-icon icon-left"><i class="fas fa-credit-card"></i> Konfirmasi Pembayaran & Proses</button>
+                    </form>
                     <a href="{{ route('admin.transactions.index') }}" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</a>
                 </div>
                 {{-- <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button> --}}
