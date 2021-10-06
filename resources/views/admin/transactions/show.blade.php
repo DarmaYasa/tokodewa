@@ -71,13 +71,15 @@ Manajemen Transaksi
                                         <th class="text-right">Total</th>
                                     </tr>
                                     @foreach ($transaction->details as $detail)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $detail->product->name }}</td>
-                                            <td class="text-center">{{ 'Rp' . number_format($detail->price, 0, ',', '.') }}</td>
-                                            <td class="text-center">{{ $detail->quantity }}</td>
-                                            <td class="text-right">{{ 'Rp' . number_format($detail->total, 0, ',', '.') }}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $detail->product->name }}</td>
+                                        <td class="text-center">{{ 'Rp' . number_format($detail->price, 0, ',', '.') }}
+                                        </td>
+                                        <td class="text-center">{{ $detail->quantity }}</td>
+                                        <td class="text-right">{{ 'Rp' . number_format($detail->total, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -89,7 +91,8 @@ Manajemen Transaksi
                             <div class="col-lg-4 text-right">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Subtotal</div>
-                                    <div class="invoice-detail-value invoice-detail-value-lg">{{ $transaction->grand_total }}</div>
+                                    <div class="invoice-detail-value invoice-detail-value-lg">
+                                        {{ $transaction->grand_total }}</div>
                                 </div>
                             </div>
                         </div>
@@ -98,12 +101,19 @@ Manajemen Transaksi
             </div>
             <hr>
             <div class="text-md-right">
-                <div class="float-lg-left mb-lg-0 mb-3">
-                    <form action="{{ route('admin.transactions.update', $transaction->id) }}" class="inline">
-                        <button class="btn btn-success btn-icon icon-left"><i class="fas fa-credit-card"></i> Konfirmasi Pembayaran & Proses</button>
-                    </form>
-                    <a href="{{ route('admin.transactions.index') }}" class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</a>
-                </div>
+                <form action="{{ route('admin.transactions.update', $transaction->id) }}" method="POST"
+                    class="form-inline">
+                    @csrf
+                    @method('patch')
+                    <div class="float-lg-left mb-lg-0 mb-3">
+                        @if (!$transaction->paid)
+                        <button class="btn btn-success btn-icon icon-left"><i class="fas fa-credit-card"></i> Konfirmasi
+                            Pembayaran & Proses</button>
+                        @endif
+                        <a href="{{ route('admin.transactions.index') }}" class="btn btn-danger btn-icon icon-left"><i
+                                class="fas fa-times"></i> Cancel</a>
+                    </div>
+                </form>
                 {{-- <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button> --}}
             </div>
         </div>

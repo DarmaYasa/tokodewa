@@ -57,7 +57,8 @@ Manajemen Transaksi
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ date('l, d F Y', strtotime($transaction->date)) }}</td>
-                                        <td>{{ $transaction->code }}</td>
+                                        <td>{{ $transaction->code }}
+                                        <hr style="border-bottom: 2px solid {{ $transaction->paid ? '#47c363' : '#fc544b' }}"></td>
                                         <td>
                                             <ul>
                                                 @foreach ($transaction->details as $detail)

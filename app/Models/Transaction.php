@@ -12,11 +12,16 @@ class Transaction extends Model
     protected $fillable = [
         'code',
         'date',
-        'user_id'
+        'user_id',
+        'paid'
     ];
 
     protected $dates = [
         'date'
+    ];
+
+    protected $casts = [
+        'paid' => 'boolean'
     ];
 
     public function user()

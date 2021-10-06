@@ -71,7 +71,7 @@
                         </svg>
                         <div class="absolute right-0 px-2 py-2 w-48 bg-white top-0 mt-12 rounded hidden border shadow"
                             id="userDropDown">
-                            <a href="" class="p-3 border-b w-full block">Profile</a>
+                            <a href="{{ url('profile') }}" class="p-3 border-b w-full block">Profile</a>
                             <form action="{{ route('logout') }}" class="w-full" method="POST">
                                 @csrf
 
@@ -126,7 +126,7 @@
                     <span class="ml-2">{{ auth()->user()->name }}</span>
                     <div class="absolute right-0 px-2 py-2 w-48 bg-white top-0 mt-16 rounded hidden mr-20 border shadow z-40"
                         id="userDropDownDesktop">
-                        <a href="" class="p-3 border-b w-full block">Profile</a>
+                        <a href="{{ url('profile') }}" class="p-3 border-b w-full block">Profile</a>
                         <form action="{{ route('logout') }}" class="w-full" method="POST">
                             @csrf
                             <button class="text-red-500 text-sm p-3 hover:text-red-600">Logout</button>

@@ -22,8 +22,18 @@
         </div>
         <form method="POST" action="{{ route('register') }}" class="mt-8 p-5 bg-white">
             @csrf
+            @if (session('success'))
+            <div class="p-3 rounded-sm text-white bg-green-500">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="p-3 rounded-sm text-white bg-red-400">
+                {{ session('error') }}
+            </div>
+            @endif
             @if ($errors->any())
-            <div class="bg-red-400 text-white rounded-sm">
+            <div class="bg-red-400 text-white rounded-sm p-3">
                 <ul>
                     @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\TransactionController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,8 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
         Route::resource('admins', App\Http\Controllers\Admin\AdminController::class);
         Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+        Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'showForm'])->name('profile');
+        Route::post('profile', [App\Http\Controllers\Admin\ProfileController::class, 'updateProfile'])->name('profile.store');
     });
 });
 
@@ -63,4 +66,6 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::post('/transactions', [TransactionController::class, 'store']);
+    Route::get('/profile', [UserController::class, 'showUpdateProfile']);
+    Route::post('/profile', [UserController::class, 'updateProfile']);
 });

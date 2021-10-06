@@ -63,7 +63,7 @@ Manajemen Admin
                                         <td>
                                             <a href="{{ route('admin.admins.edit', $admin->id) }}" class="btn btn-warning">Edit</a>
                                             <form onsubmit="return confirm('Yakin ingin menghapus data?')"
-                                                action="{{ route('admin.admins.destroy', $admins->id) }}" method="POST"
+                                                action="{{ route('admin.admins.destroy', $admin->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('delete')
