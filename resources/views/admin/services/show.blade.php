@@ -28,6 +28,9 @@ Detail Service
                     <div class="card-header">
                         <h4>Detail Service</h4>
                         <div class="card-header-action">
+                            <a href="{{ route('admin.services.print', $service->id) }}" class="btn btn-info">
+                                Print
+                            </a>
                             <a href="{{ route('admin.services.edit', $service->id) }}" class="btn btn-warning">
                                 Edit
                             </a>

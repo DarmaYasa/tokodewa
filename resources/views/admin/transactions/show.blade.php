@@ -109,6 +109,8 @@ Manajemen Transaksi
                         @if (!$transaction->paid)
                         <button class="btn btn-success btn-icon icon-left"><i class="fas fa-credit-card"></i> Konfirmasi
                             Pembayaran & Proses</button>
+                        @else
+                            <a href="{{ route('admin.transactions.print', $transaction->id) }}" class="btn btn-info btn-icon icon-left"> <i class="fas fa-print"></i> Print</a>
                         @endif
                         <a href="{{ route('admin.transactions.index') }}" class="btn btn-danger btn-icon icon-left"><i
                                 class="fas fa-times"></i> Cancel</a>

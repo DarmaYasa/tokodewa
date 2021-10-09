@@ -118,4 +118,9 @@ class ServiceController extends Controller
 
         return redirect(route($this->redirect))->with('succeess', 'Sukses mengedit data');
     }
+
+    public function print(Service $service)
+    {
+        return view('admin.services.print', compact('service'));
+    }
 }

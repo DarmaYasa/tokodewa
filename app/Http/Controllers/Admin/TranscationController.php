@@ -89,4 +89,12 @@ class TranscationController extends Controller
     {
         abort(404);
     }
+
+    public function print(Transaction $transaction)
+    {
+        if(!$transaction->paid) {
+            abort(403, 'Transaksi belum dibayar');
+        }
+        return view('admin.transactions.print', compact('transaction'));
+    }
 }

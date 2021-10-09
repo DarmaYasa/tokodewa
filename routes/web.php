@@ -44,7 +44,9 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
         Route::resource('product-categories', App\Http\Controllers\Admin\ProductCategoryController::class);
         Route::resource('transactions', App\Http\Controllers\Admin\TranscationController::class);
+        Route::get('transactions/{transaction}/print', [App\Http\Controllers\Admin\TranscationController::class, 'print'])->name('transactions.print');
         Route::resource('services', App\Http\Controllers\Admin\ServiceController::class);
+        Route::get('services/{service}/print', [App\Http\Controllers\Admin\ServiceController::class, 'print'])->name('services.print');
         Route::resource('admins', App\Http\Controllers\Admin\AdminController::class);
         Route::resource('users', App\Http\Controllers\Admin\UserController::class);
         Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'showForm'])->name('profile');
