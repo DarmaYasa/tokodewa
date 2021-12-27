@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/admin', function() {
     return redirect('/admin/dashboard');
@@ -59,7 +59,7 @@ Route::prefix('/products')->name('products.')->group(function() {
     Route::get('/{product}', [App\Http\Controllers\User\ProductController::class, 'show'])->name('show');
 });
 
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
     Route::prefix('/carts')->name('carts.')->group(function() {
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::post('/', [CartController::class, 'store'])->name('store');

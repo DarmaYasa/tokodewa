@@ -65,7 +65,7 @@ Manajemen Produk
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->qty . ' pcs' }}</td>
+                                        <td>{{ $product->quantity . ' pcs' }}</td>
                                         <td>{{ 'Rp.' . number_format($product->price, 0, ',', '.') }}</td>
                                         <td>
                                             <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-info">Detail</a>

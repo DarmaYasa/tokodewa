@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $similiarProducts = Product::where('id', '!=', $product->id)->where('product_category_id', $product->product_category_id)->inRandomOrder()->limit(3)->get();
+        $similiarProducts = Product::where('id', '!=', $product->id)->where('product_category_id', $product->product_category_id)->inRandomOrder()->limit(4)->get();
         return view('user.products.show', compact('product', 'similiarProducts'));
     }
 }

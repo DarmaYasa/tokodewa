@@ -51,14 +51,14 @@ Detail Service
                                         <td class="align-top">{{ date('l, d F Y', strtotime($service->date)) }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="align-top">Nama Pelanngan</th>
+                                        <th class="align-top">Customer</th>
                                         <td class="align-top" style="width:10px">:</td>
                                         <td class="align-top">{{ $service->user_name}}</td>
                                     </tr>
                                     <tr>
                                         <th class="align-top">Nama Barang</th>
                                         <td class="align-top" style="width:10px">:</td>
-                                        <td class="align-top">{{ $service->name}}</td>
+                                        <td class="align-top">{{ $service->product}}</td>
                                     </tr>
                                     <tr>
                                         <th class="align-top">Alamat</th>

@@ -16,19 +16,19 @@ Dashboard
         <div class="hero hero-bg-image hero-bg-parallax text-white" style="height: 50vh; background-image: url('https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');">
           <div class="hero-inner">
             <h2>Selamat Datang Di Dashboard Toko Komputer</h2>
-            <p class="lead">Toko ini menjual alat-alat komputer</p>
+            <p class="lead">Toko ini menjual alat-alat komputer, services, dan juga installasi jaringan.</p>
           </div>
         </div>
         <table style="font-size: 13pt">
           <tr>
-            <td>Tugas UAS</td>
+            <td>Nama</td>
             <td>:</td>
-            <td>I Dewa Kadek Laksana Digita</td>
+            <td>Kelompok 1 - P-IMK</td>
           </tr>
           <tr>
             <td>Mata Kuliah</td>
             <td>:</td>
-            <td>Pemrograman Berbasis Objek</td>
+            <td>Perencanaan Sistem Informasi</td>
           </tr>
         </table>
       </div>

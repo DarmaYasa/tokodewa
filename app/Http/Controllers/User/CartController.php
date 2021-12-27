@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -22,16 +23,29 @@ class CartController extends Controller
             'quantity' => 'nullable|numeric|min:1'
         ]);
 
-        $cart = Cart::where('user_id', $request->user()->id)->where('product_id', $request->product_id)->first();
-
-        if($cart != null){
-            $cart->update(['quantity' => $cart->quantity + $request->quantity]);
-        } else {
-            $request->user()->carts()->create([
-                'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-            ]);
-        }
+        $product = Product::find($request->product_id);
+            $cart = Cart::where('user_id', $request->user()->id)->where('product_id', $request->product_id)->first();
+    
+            if($cart != null){
+                if($product->quantity >= ($cart->quantity + $request->quantity)){
+                    $cart->update(['quantity' => $cart->quantity + $request->quantity]);
+                }
+                else {
+                    return response("Kuantiti melebihi", 400);
+                }
+            } else {
+                if($product->quantity >= $request->quantity) {
+                    $request->user()->carts()->create([
+                        'product_id' => $request->product_id,
+                        'quantity' => $request->quantity,
+                    ]);
+                }
+                else {
+                    return response("Kuantiti melebihi", 400);
+                }
+            }
+            
+        
 
         return response($request->user()->carts->count(), 201);
     }

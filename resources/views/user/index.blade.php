@@ -11,10 +11,10 @@ Home
 
         </div> --}}
         <div id="slider" class="w-full rounded-md overflow-hidden h-56 lg:h-144">
-            @foreach ($sliders as $slider)
-            <div class="">
-                <img class="h-56 lg:h-156" src="{{$slider }}" alt="">
-            </div>
+            @foreach($sliders as $slider)
+                <div class="">
+                    <img class="h-56 lg:h-156" src="{{ $slider }}" alt="">
+                </div>
             @endforeach
         </div>
     </div>
@@ -33,49 +33,60 @@ Home
             </a>
         </div>
         <div class="container mx-auto flex flex-wrap -m-4">
-            @foreach ($popularProducts as $key => $product)
-            <div
-                class="lg:w-1/4 md:w-1/2 p-4 w-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
-                <a class="block relative h-48 md:h-60 rounded overflow-hidden">
-                    <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
-                        src="{{ $product->thumbnail_url }}">
-                </a>
-                <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
-                        {{ $product->category->name }}</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
-                    <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
+            @foreach($popularProducts as $key => $product)
+                <div class="lg:w-1/4 md:w-1/2 p-2 w-full">
+                    <div
+                        class="p-4 w-full h-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
+                        <a class="block relative h-48 md:h-60 rounded overflow-hidden">
+                            <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
+                                src="{{ $product->thumbnail_url }}">
+                        </a>
+                        <div class="mt-4">
+                            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
+                                {{ $product->category->name }}</h3>
+                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
+                            <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
+                        </div>
+                        <div class="mt-2 flex justify-between">
+                            <a href="{{ route('products.show', $product->id) }}"
+                                class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
+                                Detail</a>
+                            @if(Auth::check() && Auth::user()->hasVerifiedEmail())
+                                <form action="" class="cartForm" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button
+                                        class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            @elseif(Auth::check() && !Auth::user()->hasVerifiedEmail())
+                                <a href="{{ route('verification.notice') }}"
+                                    class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-2 flex justify-between">
-                    <a href="{{ route('products.show', $product->id) }}"
-                        class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
-                        Detail</a>
-                    @if (Auth::check())
-                    <form action="" class="cartForm" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <button
-                            class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </button>
-                    </form>
-                    @else
-                    <a href="{{ route('login') }}"
-                        class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </a>
-                    @endif
-                </div>
-            </div>
             @endforeach
         </div>
     </div>
@@ -94,49 +105,61 @@ Home
             </a>
         </div>
         <div class="container mx-auto flex flex-wrap -m-4">
-            @foreach ($products as $key => $product)
-            <div
-                class="lg:w-1/4 md:w-1/2 p-4 w-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
-                <a class="block relative h-48 md:h-60 rounded overflow-hidden">
-                    <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
-                        src="{{ $product->thumbnail_url }}">
-                </a>
-                <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
-                        {{ $product->category->name }}</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
-                    <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
-                </div>
-                <div class="mt-2 flex justify-between">
-                    <a href="{{ route('products.show', $product->id) }}"
-                        class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
-                        Detail</a>
-                        @if (Auth::check())
-                        <form action="" class="cartForm" method="POST">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" value="1">
-                            <button
-                                class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            </button>
-                        </form>
-                        @else
-                        <a href="{{ route('login') }}"
-                            class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
+            @foreach($products as $key => $product)
+                <div class="lg:w-1/4 md:w-1/2 p-2 w-full">
+                    <div
+                        class="p-4 w-full h-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
+                        <a class="block relative h-48 md:h-60 rounded overflow-hidden">
+                            <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
+                                src="{{ $product->thumbnail_url }}">
                         </a>
-                        @endif
+                        <div class="mt-4">
+                            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
+                                {{ $product->category->name }}</h3>
+                            <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
+                            <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
+                        </div>
+                        <div class="mt-2 flex justify-between">
+                            <a href="{{ route('products.show', $product->id) }}"
+                                class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
+                                Detail</a>
+                            @if(Auth::check() && Auth::user()->hasVerifiedEmail())
+                                <form action="" class="cartForm" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button
+                                        class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </button>
+                                </form>
+                                <blade
+                                    elseif|%20(Auth%3A%3Acheck()%20%26%26%20!Auth%3A%3Auser()-%3EhasVerifiedEmail()) />
+                                <a href="{{ route('verification.notice') }}"
+                                    class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>

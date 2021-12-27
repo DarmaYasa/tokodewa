@@ -7,9 +7,9 @@ Transaksi
 @section('content')
 <section class="invoice-info">
     <div class="invoice-info__retail">
-        Alamat <br>
-        <strong>WA:</strong> WA <br>
-        <strong>Telepon:</strong> Telp <br>
+        Alamat: Jalan Akasia XVI A No 40 Denpasar Gang Melati<br>
+        <strong>WA:</strong> 082247248902 <br>
+        <strong>Telepon:</strong> 082247248902 <br>
         <div style="border-bottom: 1px solid #eaeaea; width: 60%; margin-top: 5px; margin-bottom: 5px;"></div>
         No. <strong>#{{ $transaction->code }}</strong> <br>
     </div>
@@ -53,5 +53,24 @@ Transaksi
 
     </div>
 </section>
+<p>#Note : Barang yang sudah di beli tidak dapat ditukar atau kembalikan.</p>
+    <table style="width: 100%">
+    <tr>
+        <td>
+        Customer
+        <br>
+        <br>
+        <br>
+        {{ $transaction->user->name }}
+        </td>
+        <td>
+        Mengetahui
+        <br>
+        <br>
+        <br>
+        ____________
+        </td>
+    </tr>
+<table>
 @endsection
 

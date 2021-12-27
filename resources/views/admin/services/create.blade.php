@@ -45,10 +45,10 @@ Input Service
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="required">Pelanggan</label>
+                                <label>Pelanggan</label>
                                 <select name="user_id"
                                     class="custom-select select2 @error('user_id') is-invalid @enderror">
-                                    <option disabled @if(old('user_id')==null) selected @endif>-Pilih-</option>
+                                    <option value='' @if(old('user_id')==null) selected @endif>-Pilih-</option>
                                     @foreach ($users as $user)
                                     <option value="{{ $user->id }}" data-name="{{ $user->name }}"
                                         data-address="{{ $user->address }}" data-telp="{{ $user->telp }}"

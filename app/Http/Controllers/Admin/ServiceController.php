@@ -66,6 +66,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        //if($service->user == null) abort(404);
         return view('admin.services.show', compact('service'));
     }
 
@@ -77,6 +78,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+        //if($service->user == null) abort(404);
         $users = User::all();
         return view('admin.services.edit', compact('service', 'users'));
     }
@@ -121,6 +123,7 @@ class ServiceController extends Controller
 
     public function print(Service $service)
     {
+        //if($service->user == null) abort(404);
         return view('admin.services.print', compact('service'));
     }
 }

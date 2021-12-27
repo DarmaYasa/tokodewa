@@ -46,10 +46,11 @@ Product
                         <h1 class="font-medium text-lg md:text-xl mb-2">{{ $cart->product->name }}</h1>
                         <input type="hidden" name="product_price" value="{{ $cart->product->price }}">
                         <input type="hidden" name="total" value="{{ $cart->total }}">
-                        <input type="number" value="{{ floatval($cart->quantity) }}" onchange="changeQuantity({{ $cart->id }}, event)"
+                        <input type="number" min="1" max="{{ $cart->product->quantity }}" value="{{ floatval($cart->quantity) }}" onchange="changeQuantity({{ $cart->id }}, event)"
                             class="border-none bg-gray-100 pl-2 pr-1 py-2 focus:outline-none focus:border-blue-600 rounded w-14">
                         <span class="price ml-2">Rp{{ number_format($cart->product->price) }}</span>
                         <span
+
                             class="total ml-0 border-l-0 md:ml-2 md:border-l px-0 md:px-3 block md:inline py-3 md:py-0 font-medium">Rp{{ number_format($cart->total) }}</span>
                     </div>
                 </div>
@@ -77,14 +78,14 @@ Product
         $.ajax({
                 type: "POST",
                 data: { },
-                url: "{{ url('transactions/') }}/",
+                url: "{{ url('transactions') }}",
                 success: function(data) {
 
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil, silahkan konfirmasi pembayaran ' + data.trim() + " ke admin",
                     }).then(function() {
-                        window.location.href = "https://api.whatsapp.com/send?phone=62812345578&text=Halo%20saya%20mau%20konfirmasi%20%20pembayaran%20pesanan%20" + data.trim();
+                        window.location.href = "https://api.whatsapp.com/send?phone=6282247248902&text=Halo%20saya%20mau%20konfirmasi%20%20pembayaran%20pesanan%20" + data.trim();
                     })
                     $('#loadingScreen').addClass('hidden');
                 },
@@ -109,7 +110,6 @@ Product
                 // processData: false,
                 // contentType: false,
                 success: function(data) {
-
                     $('#totalCart').html('Rp ' + Number(data.grand_total).toLocaleString());
                     $('#cart_' + id + " .total").html('Rp ' + Number(data.total).toLocaleString());
                     // Swal.fire({
@@ -126,7 +126,7 @@ Product
                         backdrop: false,
                         heightAuto: false,
                         icon: 'error',
-                        title: 'Gagal',
+                        title: 'Server Error atau Cart melebihi produk stock',
                         // text: error.responseJSON.error,
                     });
                 }

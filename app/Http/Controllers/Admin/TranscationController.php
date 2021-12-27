@@ -49,6 +49,7 @@ class TranscationController extends Controller
      */
     public function show(Transaction $transaction)
     {
+        //if($transaction->user == null) abort(404);
         return view('admin.transactions.show', compact('transaction'));
     }
 
@@ -92,6 +93,7 @@ class TranscationController extends Controller
 
     public function print(Transaction $transaction)
     {
+        //if($transaction->user == null) abort(404);
         if(!$transaction->paid) {
             abort(403, 'Transaksi belum dibayar');
         }

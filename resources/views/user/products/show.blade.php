@@ -23,7 +23,8 @@ Product
             <img alt="ecommerce" class="lg:w-1/2 w-full h-64 md:h-144 object-cover object-center rounded-md shadow-md"
                 src="{{ $product->thumbnail_url }}">
             <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">{{ $product->category->name }}
+                <h2 class="text-sm title-font text-gray-500 tracking-widest uppercase">
+                    {{ $product->category->name }}
                 </h2>
                 <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ $product->name }}</h1>
 
@@ -40,13 +41,18 @@ Product
                     <input name="quantity" type="number" min="1"
                         class="pl-3 pr-1 py-2 rounded max-w-16 w-16 mr-2 border-2 border-blue-600" value="1">
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    @if (Auth::check())
-                    <button id="buttonSubmit"
-                        class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">Tambah
-                        Ke Keranjang</button>
+                    @if(Auth::check() && Auth::user()->hasVerifiedEmail())
+                        <button id="buttonSubmit"
+                            class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">Tambah
+                            Ke Keranjang</button>
+                    @elseif(Auth::check() && !Auth::user()->hasVerifiedEmail())
+                        <a href="{{ route('verification.notice') }}"
+                            class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Tambah
+                            Ke Keranjang</a>
                     @else
-                    <a href="{{ route('login') }}" class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Tambah
-                        Ke Keranjang</a>
+                        <a href="{{ route('login') }}"
+                            class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">Tambah
+                            Ke Keranjang</a>
                     @endif
                 </form>
             </div>
@@ -66,49 +72,60 @@ Product
     </div>
 </div>
 <div class="container mx-auto flex flex-wrap -m-4 mb-10">
-    @foreach ($similiarProducts as $key => $product)
-    <div
-        class="lg:w-1/4 md:w-1/2 p-4 w-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
-        <a class="block relative h-48 md:h-60 rounded overflow-hidden">
-            <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
-                src="{{ $product->thumbnail_url }}">
-        </a>
-        <div class="mt-4">
-            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
-                {{ $product->category->name }}</h3>
-            <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
-            <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
+    @foreach($similiarProducts as $key => $product)
+        <div class="lg:w-1/4 md:w-1/2 p-2">
+            <div
+                class="p-4 w-full h-full bg-white shadow-sm rounded-md hover:shadow-lg transition-all duration-500 ease-in-out transform hover:-translate-y-3 mb-5 mr-0 md:mr-5">
+                <a class="block relative h-48 md:h-60 rounded overflow-hidden">
+                    <img alt="ecommerce" class=" h-full block w-full object-center object-cover"
+                        src="{{ $product->thumbnail_url }}">
+                </a>
+                <div class="mt-4">
+                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">
+                        {{ $product->category->name }}</h3>
+                    <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
+                    <p class="mt-1">{{ 'Rp'. number_format($product->price) }}</p>
+                </div>
+                <div class="mt-2 flex justify-between">
+                    <a href="{{ route('products.show', $product->id) }}"
+                        class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
+                        Detail</a>
+                    @if(Auth::check() && Auth::user()->hasVerifiedEmail())
+                        <form action="" class="cartForm" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button
+                                class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </button>
+                        </form>
+                    @elseif( Auth::check() && !Auth::user()->hasVerifiedEmail())
+                        <a href="{{ route('verification.notice') }}"
+                            class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </a>
+                    @endif
+                </div>
+            </div>
         </div>
-        <div class="mt-2 flex justify-between">
-            <a href="{{ route('products.show', $product->id) }}"
-                class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg">Lihat
-                Detail</a>
-            @if (Auth::check())
-            <form action="" class="cartForm" method="POST">
-                @csrf
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button
-                    class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg {{ auth()->check() ? '' : 'pointer-events-none opacity-50' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </button>
-            </form>
-            @else
-            <a href="{{ route('login') }}"
-                class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-            </a>
-            @endif
-        </div>
-    </div>
     @endforeach
 </div>
 @endsection
@@ -116,50 +133,50 @@ Product
 @section('script')
 
 <script>
-    $('#cartForm').on('submit', function(e) {
-            e.preventDefault();
-            $('#buttonSubmit').addClass('opacity-50 pointer-envents-none');
-            $.ajax({
-                type: "POST",
-                data: $(this).serializeArray(),
-                url: "{{ route('carts.store') }}",
-                // processData: false,
-                // contentType: false,
-                success: function(data) {
-                    $('#buttonSubmit').removeClass('opacity-50 pointer-envents-none');
-                    console.log(data);
+    $('#cartForm').on('submit', function (e) {
+        e.preventDefault();
+        $('#buttonSubmit').addClass('opacity-50 pointer-envents-none');
+        $.ajax({
+            type: "POST",
+            data: $(this).serializeArray(),
+            url: "{{ route('carts.store') }}",
+            // processData: false,
+            // contentType: false,
+            success: function (data) {
+                $('#buttonSubmit').removeClass('opacity-50 pointer-envents-none');
+                console.log(data);
 
-                    // window.open(printURL + '/' + data.invoice.invoice_number, '_blank');
-                    $('#cartCount').html(Number(data));
-                    $('#cartCountDesktop').html(Number(data));
-                    Swal.fire({
-                        // heightAuto: false,
-                        icon: 'success',
-                        title: 'Berhasil',
-                        // onAfterClose: () => window.scrollTo(0,0)
-                        // showCancelButton: true,
-                        // confirmButtonText: 'Cetak Invoice',
-                        // cancelButtonText: 'No, cancel!',
-                        // reverseButtons: true
-                        // text: 'Tidak ada barang yang dimasukkan!',
-                    })
-                    // document.getElementById('top').scrollIntoView();
-                    // $('input[name="customer_code"]').focus();
+                // window.open(printURL + '/' + data.invoice.invoice_number, '_blank');
+                $('#cartCount').html(Number(data));
+                $('#cartCountDesktop').html(Number(data));
+                Swal.fire({
+                    // heightAuto: false,
+                    icon: 'success',
+                    title: 'Berhasil',
+                    // onAfterClose: () => window.scrollTo(0,0)
+                    // showCancelButton: true,
+                    // confirmButtonText: 'Cetak Invoice',
+                    // cancelButtonText: 'No, cancel!',
+                    // reverseButtons: true
+                    // text: 'Tidak ada barang yang dimasukkan!',
+                })
+                // document.getElementById('top').scrollIntoView();
+                // $('input[name="customer_code"]').focus();
 
-                },
-                error: function(error) {
-                    console.log(error.responseJSON);
-                    Swal.fire({
-                        backdrop: false,
-                        heightAuto: false,
-                        icon: 'error',
-                        title: 'Gagal',
-                        // text: error.responseJSON.error,
-                    });
-                    $('#buttonSubmit').removeClass('opacity-50 pointer-envents-none');
-                }
-            })
+            },
+            error: function (error) {
+                console.log(error.responseJSON);
+                Swal.fire({
+                    backdrop: false,
+                    heightAuto: false,
+                    icon: 'error',
+                    title: 'Gagal',
+                    // text: error.responseJSON.error,
+                });
+                $('#buttonSubmit').removeClass('opacity-50 pointer-envents-none');
+            }
         })
+    })
 
 </script>
 @endsection

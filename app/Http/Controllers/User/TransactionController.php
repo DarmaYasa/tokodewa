@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,10 @@ class TransactionController extends Controller
             ]);
 
             $cart->delete();
+            $product = Product::find($cart->product_id);
+            $product->update([
+                'quantity' => $product->quantity - $cart->quantity
+            ]);
         }
 
         return response($transaction->code, 201);

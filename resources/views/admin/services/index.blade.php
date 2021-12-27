@@ -59,11 +59,11 @@ Manajemen Service
                                     <tr>
                                         <td>{{ ++$key }}</td>
                                         <td>{{ $service->date }}</td>
-                                        <td>{{ $service->name }}</td>
-                                        <td>{{ $service->stuff }}</td>
+                                        <td>{{ $service->user_name }}</td>
+                                        <td>{{ $service->product }}</td>
                                         <td>{{ $service->type }}</td>
-                                        <td>{{ $service->address }}</td>
-                                        <td>{{ $service->telp }}</td>
+                                        <td>{{ $service->user_address }}</td>
+                                        <td>{{ $service->user_telp }}</td>
                                         <td>
                                             <a href="{{ route('admin.services.show', $service->id) }}" class="btn btn-info">Detail</a>
                                         </td>
