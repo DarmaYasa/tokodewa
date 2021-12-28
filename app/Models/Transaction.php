@@ -24,6 +24,8 @@ class Transaction extends Model
         'paid' => 'boolean'
     ];
 
+    protected $appends = ['grand_total'];
+
     public function user()
     {
         return $this->belongsTo(User::class)->withTrashed();

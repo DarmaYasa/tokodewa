@@ -18,17 +18,7 @@ class ProductCategoryController extends Controller
     public function index()
     {
         $productCategories = ProductCategory::all();
-        return view('admin.product-categories.index', compact('productCategories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.product-categories.create');
+        return response($productCategories);
     }
 
     /**
@@ -43,9 +33,9 @@ class ProductCategoryController extends Controller
             'name' => 'required|unique:product_categories,name',
         ]);
 
-        ProductCategory::create(['name' => $request->name]);
+        $productCategory = ProductCategory::create(['name' => $request->name]);
 
-        return redirect(route($this->redirect))->with('success', 'Sukses menambah data');
+        return response($productCategory, 201);
     }
 
     /**
@@ -57,17 +47,6 @@ class ProductCategoryController extends Controller
     public function show($id)
     {
         abort(404);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductCategory $productCategory)
-    {
-        return view('admin.product-categories.edit', compact('productCategory'));
     }
 
     /**
@@ -87,7 +66,7 @@ class ProductCategoryController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect(route($this->redirect))->with('success', 'Sukses mengupdate data');
+        return response($productCategory, 201);
     }
 
     /**
@@ -98,12 +77,8 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        try {
-            $productCategory->delete();
-        } catch (\Throwable $th) {
-            return redirect(route($this->redirect))->with('error', $th->getMessage());
-        }
+        $productCategory->delete();
 
-        return redirect(route($this->redirect))->with('success', 'Sukses menghapus data');
+        return response(null, 204);
     }
 }

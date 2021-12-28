@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -17,8 +17,10 @@ class Product extends Model
         'quantity',
         'price',
         'description',
-        'thumbnail'
+        'thumbnail',
     ];
+
+    protected $appends = ['thumbnail_url'];
 
     public function category()
     {
@@ -32,7 +34,7 @@ class Product extends Model
 
     public function getThumbnailUrlAttribute()
     {
-        if($this->thumbnail != null) {
+        if ($this->thumbnail != null) {
             return asset(Storage::url($this->thumbnail));
         } else {
             return 'https://dummyimage.com/500x500/6366f1/ffff.png&text=' . $this->name;

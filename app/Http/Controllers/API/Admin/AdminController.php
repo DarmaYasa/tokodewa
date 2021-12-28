@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -17,20 +16,10 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        $adminId = Auth::guard('admin')->user()->id;
+        $adminId = $request->user()->id;
         $admins = Admin::where('id', '!=', $adminId)->get();
 
         return response($admins);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.admins.create');
     }
 
     /**
@@ -51,7 +40,7 @@ class AdminController extends Controller
 
         $admin = Admin::create($validated);
 
-        return redirect(route('admin.admins.index'))->with('success', 'Data berhasil ditambahkan');
+        return response($admin, 201);
     }
 
     /**
@@ -63,18 +52,6 @@ class AdminController extends Controller
     public function show(Admin $admin)
     {
         abort(404);
-        return view('admin.admins.show', compact('admin'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Admin $admin)
-    {
-        return view('admin.admins.edit', compact('admin'));
     }
 
     /**
@@ -103,7 +80,7 @@ class AdminController extends Controller
             $admin->password = Hash::make($request->password);
         }
         $admin->save();
-        return redirect(route('admin.admins.index'))->with('success', 'Data berhasil diupdate');
+        return response($admin, 201);
     }
 
     /**
@@ -114,11 +91,8 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        try {
-            $admin->delete();
-            return redirect(route('admin.admins.index'))->with('success', 'Data berhasil dihapus');
-        } catch (\Throwable$th) {
-            return redirect(route('admin.admins.index'))->with('error', $th->getMessage());
-        }
+        $admin->delete();
+
+        return response(null, 204);
     }
 }

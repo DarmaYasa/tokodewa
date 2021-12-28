@@ -15,19 +15,9 @@ class TranscationController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::with('details')->get();
 
-        return view('admin.transactions.index', compact('transactions'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        abort(404);
+        return response($transactions);
     }
 
     /**
@@ -49,8 +39,8 @@ class TranscationController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //if($transaction->user == null) abort(404);
-        return view('admin.transactions.show', compact('transaction'));
+        $transaction->load('details');
+        return response($transaction);
     }
 
     /**
@@ -74,10 +64,10 @@ class TranscationController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $transaction->update([
-            'paid' => true
+            'paid' => true,
         ]);
 
-        return redirect()->back()->with('success', 'Transaksi diupdate');
+        return response($transaction);
     }
 
     /**
@@ -89,14 +79,5 @@ class TranscationController extends Controller
     public function destroy($id)
     {
         abort(404);
-    }
-
-    public function print(Transaction $transaction)
-    {
-        //if($transaction->user == null) abort(404);
-        if(!$transaction->paid) {
-            abort(403, 'Transaksi belum dibayar');
-        }
-        return view('admin.transactions.print', compact('transaction'));
     }
 }

@@ -18,17 +18,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('admin.users.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admin.users.create');
+        return response($users);
     }
 
     /**
@@ -50,7 +40,7 @@ class UserController extends Controller
         $validated['password'] = Hash::make($request->password);
         $user = User::create($validated);
 
-        return redirect(route('admin.users.index'))->with('success', 'Data berhasil ditambah');
+        return response($user, 201);
     }
 
     /**
@@ -62,18 +52,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         abort(404);
-        return view('admin.users.show', compact('user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -87,7 +65,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,'. $user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
             'address' => 'required',
             'telp' => 'required',
@@ -98,11 +76,11 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->telp = $request->telp;
 
-        if($request->filled('password')){
+        if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
-        return redirect(route('admin.users.index'))->with('success', 'Data berhasil diupdate');
+        return response($user, 201);
     }
 
     /**
@@ -113,12 +91,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        try {
-            $user->delete();
-            return redirect(route('admin.users.index'))->with('success', 'Data berhasil dihapus');
-        } catch (\Throwable $th) {
-            return redirect(route('admin.users.index'))->with('error', $th->getMessage());
+        $user->delete();
 
-        }
+        return response(null, 204);
     }
 }

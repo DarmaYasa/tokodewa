@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -19,19 +18,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('admin.products.index', compact('products'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $categories = ProductCategory::all();
-        return view('admin.products.create', compact('categories'));
+        $products = Product::with('category')->get();
+        return response($products);
     }
 
     /**
@@ -51,11 +39,9 @@ class ProductController extends Controller
             'thumbnail' => 'required|image',
         ]);
         try {
-
-            //code...
             $thumbnail = $request->thumbnail->store('/products');
 
-            Product::create([
+            $product = Product::create([
                 'name' => $request->name,
                 'product_category_id' => $request->product_category_id,
                 'quantity' => $request->quantity,
@@ -63,8 +49,8 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'thumbnail' => $thumbnail,
             ]);
-
-            return redirect(route($this->redirect))->with('success', 'Sukses menambah data');
+            $product->load('category');
+            return response($product, 201);
         } catch (\Throwable$th) {
             throw new Exception($th->getMessage(), 1);
         }
@@ -78,19 +64,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.products.show', compact('product'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        $categories = ProductCategory::all();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $product->load('category');
+        return response($product);
     }
 
     /**
@@ -125,7 +100,9 @@ class ProductController extends Controller
             'thumbnail' => isset($thumbnail) ? $thumbnail : $product->thumbnail,
         ]);
 
-        return redirect(route($this->redirect))->with('success', 'Sukses mengupdate data');
+        $product->load('category');
+
+        return response($product, 201);
     }
 
     /**
@@ -138,6 +115,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect(route($this->redirect))->with('success', 'Sukses menghapus data');
+        return response(null, 204);
     }
 }

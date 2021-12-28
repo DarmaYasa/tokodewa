@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -18,20 +17,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $services = Service::with('user')->get();
 
-        return view('admin.services.index', compact('services'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $users = User::all();
-        return view('admin.services.create', compact('users'));
+        return response($services);
     }
 
     /**
@@ -55,7 +43,8 @@ class ServiceController extends Controller
         ]);
 
         $service = Service::create($validated);
-        return redirect(route($this->redirect))->with('succeess', 'Sukses menambah data');
+        $service->load('user');
+        return response($service, 201);
     }
 
     /**
@@ -67,20 +56,8 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         //if($service->user == null) abort(404);
-        return view('admin.services.show', compact('service'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Service $service)
-    {
-        //if($service->user == null) abort(404);
-        $users = User::all();
-        return view('admin.services.edit', compact('service', 'users'));
+        $service->load('user');
+        return response($service);
     }
 
     /**
@@ -105,7 +82,8 @@ class ServiceController extends Controller
         ]);
 
         $service->update($validated);
-        return redirect(route($this->redirect))->with('succeess', 'Sukses mengedit data');
+        $service->load('user');
+        return response($service, 201);
     }
 
     /**
@@ -118,12 +96,6 @@ class ServiceController extends Controller
     {
         $service->delete();
 
-        return redirect(route($this->redirect))->with('succeess', 'Sukses mengedit data');
-    }
-
-    public function print(Service $service)
-    {
-        //if($service->user == null) abort(404);
-        return view('admin.services.print', compact('service'));
+        return response(null, 204);
     }
 }
