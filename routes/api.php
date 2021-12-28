@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'user'], function () {
     Route::apiResource('products', UserProductController::class)->only(['show', 'index']);
 
-    Route::group(['middleware' => ['auth:admin_api']], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
         Route::apiResource('carts', CartController::class);
         Route::post('transaction', [TransactionController::class, 'store']);
         Route::post('update-profile', [UserUserController::class, 'updateProfile']);
