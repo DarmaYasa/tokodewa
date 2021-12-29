@@ -39,6 +39,8 @@ class UserController extends Controller
 
         $validated['password'] = Hash::make($request->password);
         $user = User::create($validated);
+        $user->email_verified_at = now();
+        $user->save();
 
         return response($user, 201);
     }
