@@ -11,7 +11,7 @@ class AdminLoginController extends Controller
 {
     public function login(Request $request)
     {
-        if (!Auth::guard('admin_api')->attempt($request->only('email', 'password'))) {
+        if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             return response()
                 ->json(['message' => 'Unauthorized'], 401);
         }
